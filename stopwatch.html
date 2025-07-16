@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <!-- Google Fonts: Press Start 2P for pixelated look -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #181c23 0%, #23272f 100%);
+            color: #e0e0e0;
+            font-family: 'Press Start 2P', monospace;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #b0e0ff;
+            text-shadow: 0 0 6px #1a2a3a;
+            letter-spacing: 2px;
+        }
+        #timer {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 4px;
+            color: #e0e0e0;
+            background: rgba(30, 36, 48, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 0 16px 2px #1a2a3a44;
+            padding: 32px 40px;
+            text-shadow: 0 0 8px #3a4a5a44;
+            animation: timerPulse 2s infinite alternate;
+            transition: background 0.3s;
+        }
+        @keyframes timerPulse {
+            0% {
+                box-shadow: 0 0 16px 2px #1a2a3a44;
+                background: rgba(30, 36, 48, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 32px 8px #1a2a3a66;
+                background: rgba(30, 36, 48, 0.85);
+            }
+        }
+        button {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            padding: 14px 28px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 6px;
+            background: #23272f;
+            color: #b0e0ff;
+            font-weight: bold;
+            box-shadow: 0 2px 8px #1a2a3a33;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+            outline: none;
+        }
+        button:hover:not(:disabled) {
+            background: #2a313d;
+            color: #fff;
+            box-shadow: 0 4px 16px #1a2a3a55;
+        }
+        button:active {
+            transform: scale(0.97);
+            background: #1a1e25;
+        }
+        button:disabled {
+            background: #23272f;
+            color: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        @media (max-width: 600px) {
+            #timer {
+                font-size: 24px;
+                padding: 14px 6px;
+            }
+            h1 {
+                font-size: 18px;
+            }
+            button {
+                font-size: 10px;
+                padding: 8px 8px;
+                margin: 0 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Stopwatch</h1>
+    <div id="timer">
+        <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+    </div>
+    <div>
+        <button id="startBtn" onclick="startStopwatch()">Start</button>
+        <button id="stopBtn" onclick="stopStopwatch()">Stop</button>
+        <button id="resetBtn" onclick="resetStopwatch()">Reset</button>
+    </div>
+    <script src="stopwatch.js"></script>
+</body>
+</html>
