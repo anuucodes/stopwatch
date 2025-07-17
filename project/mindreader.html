@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mind Reader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', monospace;
+      background: #fff;
+      color: #222;
+      transition: background 0.7s, color 0.7s;
+    }
+    .rainbow-bg {
+      background: linear-gradient(270deg, #ff00cc, #3333ff, #00ffcc, #ffcc00, #ff0066, #00ffcc, #3333ff, #ff00cc);
+      background-size: 1600% 1600%;
+      animation: rainbowBG 12s ease-in-out infinite;
+      color: #fff !important;
+    }
+    @keyframes rainbowBG {
+      0% {background-position:0% 50%}
+      25% {background-position:50% 100%}
+      50% {background-position:100% 50%}
+      75% {background-position:50% 0%}
+      100% {background-position:0% 50%}
+    }
+    .container {
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 0 32px 8px #0001, 0 0 0 4px #fff2 inset;
+      padding: 48px 32px 32px 32px;
+      text-align: center;
+      max-width: 400px;
+      width: 90vw;
+      transition: background 0.7s, color 0.7s;
+    }
+    .rainbow-bg .container {
+      background: rgba(20, 20, 30, 0.85);
+      color: #fff;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 32px;
+      color: #222;
+      text-shadow: none;
+      letter-spacing: 1px;
+      transition: color 0.7s, text-shadow 0.7s;
+    }
+    .rainbow-bg h1 {
+      color: #fff;
+      text-shadow: 0 0 8px #fff, 0 0 16px #ff00cc;
+    }
+    label, p {
+      font-size: 14px;
+      margin-bottom: 18px;
+      display: block;
+      color: #222;
+      text-shadow: none;
+      transition: color 0.7s, text-shadow 0.7s;
+    }
+    .rainbow-bg label, .rainbow-bg p {
+      color: #fff;
+      text-shadow: 0 0 4px #000a;
+    }
+    input[type="number"] {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 18px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 2px solid #222;
+      background: #fff;
+      color: #222;
+      margin-bottom: 24px;
+      width: 80%;
+      box-sizing: border-box;
+      outline: none;
+      transition: border 0.2s, background 0.7s, color 0.7s;
+    }
+    input[type="number"]:focus {
+      border: 2px solid #ff00cc;
+    }
+    .rainbow-bg input[type="number"] {
+      background: #222;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+    button {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      background: #222;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ff00cc33, 0 0 20px #3333ff22;
+      cursor: pointer;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+    }
+    button:active {
+      transform: scale(0.97);
+      background: #3333ff;
+    }
+    .rainbow-bg button {
+      background: linear-gradient(90deg, #ff00cc 0%, #3333ff 100%);
+      color: #fff;
+    }
+    .loading {
+      margin: 32px 0 24px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .mind-animation {
+      font-size: 32px;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 12px #ff00cc, 0 0 24px #3333ff;
+      animation: mindPulse 1.2s infinite alternate;
+    }
+    @keyframes mindPulse {
+      0% { text-shadow: 0 0 12px #ff00cc, 0 0 24px #3333ff; }
+      100% { text-shadow: 0 0 32px #ffcc00, 0 0 48px #00ffcc; }
+    }
+    .dots {
+      font-size: 32px;
+      letter-spacing: 8px;
+      color: #fff;
+      text-shadow: 0 0 8px #fff, 0 0 16px #ff00cc;
+      animation: dotsBlink 1s steps(3, end) infinite;
+    }
+    @keyframes dotsBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .result {
+      font-size: 22px;
+      color: #fff;
+      margin-top: 32px;
+      text-shadow: 0 0 8px #ff00cc, 0 0 16px #3333ff;
+      animation: reveal 1s;
+      transition: font-size 0.5s;
+    }
+    .big-reveal {
+      font-size: 48px !important;
+      font-weight: bold;
+      color: #ffcc00;
+      text-shadow: 0 0 16px #fff, 0 0 32px #ff00cc, 0 0 64px #ffcc00;
+      margin-top: 40px;
+      margin-bottom: 24px;
+      animation: popIn 0.8s;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.7); }
+      80% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    /* Confetti styles */
+    .confetti {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="confetti" id="confettiCanvas" style="display:none;"></canvas>
+  <div class="container" id="container">
+    <h1>🧠 Mind Reader Final Project</h1>
+    <form id="mindForm">
+      <label for="number">Think of a number in your mind.<br>When ready, enter it below and I'll read your mind!</label>
+      <input type="number" id="number" name="number" required autocomplete="off" min="-999999" max="999999">
+      <br>
+      <button type="submit">Read My Mind</button>
+    </form>
+    <div id="loading" class="loading" style="display:none;">
+      <div class="mind-animation">Reading your mind <span class="dots">...</span></div>
+      <div style="font-size:12px; color:#fff9;">(Activating psychic powers...)</div>
+    </div>
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+  <script>
+    // Confetti code (simple burst)
+    function confettiBlast() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = 'block';
+      const confettiCount = 180;
+      const confettiColors = ['#ff00cc','#3333ff','#00ffcc','#ffcc00','#ff0066','#00ffcc','#3333ff','#ff00cc'];
+      let confetti = [];
+      for (let i = 0; i < confettiCount; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * confettiCount,
+          color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+          tilt: Math.floor(Math.random() * 10) - 10,
+          tiltAngleIncremental: (Math.random() * 0.07) + .05,
+          tiltAngle: 0
+        });
+      }
+      let angle = 0;
+      let tiltAngle = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < confetti.length; i++) {
+          let c = confetti[i];
+          ctx.beginPath();
+          ctx.lineWidth = c.r;
+          ctx.strokeStyle = c.color;
+          ctx.moveTo(c.x + c.tilt + (c.r/3), c.y);
+          ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r);
+          ctx.stroke();
+        }
+        update();
+      }
+      function update() {
+        angle += 0.01;
+        tiltAngle += 0.1;
+        for (let i = 0; i < confetti.length; i++) {
+          let c = confetti[i];
+          c.y += (Math.cos(angle + c.d) + 3 + c.r/2) / 2;
+          c.x += Math.sin(angle);
+          c.tiltAngle += c.tiltAngleIncremental;
+          c.tilt = Math.sin(c.tiltAngle - (i % 3)) * 15;
+          if (c.y > canvas.height) {
+            c.x = Math.random() * canvas.width;
+            c.y = -10;
+          }
+        }
+      }
+      let confettiTimer = setInterval(draw, 16);
+      setTimeout(() => {
+        clearInterval(confettiTimer);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'none';
+      }, 2500);
+    }
+
+    const form = document.getElementById('mindForm');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+    const container = document.getElementById('container');
+    let userNumber = null;
+    const body = document.body;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      userNumber = document.getElementById('number').value;
+      // Switch to rainbow background and white text
+      body.classList.add('rainbow-bg');
+      container.classList.add('rainbow-bg');
+      form.style.display = 'none';
+      result.style.display = 'none';
+      loading.style.display = 'flex';
+      // Simulate mind reading with a fun delay and animation
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'ANALYZING YOUR THINKING';
+      }, 1500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'SEARCHING THE POSSIBILITY!!!';
+      }, 2500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'APPLYING THE THEORY OF RELATIVITY';
+      }, 3500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'OPENING YOUR INSTA ID :)';
+      }, 4500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'LOOKING HOT CUTIE!!';
+      }, 5500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'SEARCHING CHROME SEARCH HISTORY ;)';
+      }, 6500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'LETTER TOH NHI DALA THA NA LA*DE';
+      }, 7500);
+      setTimeout(() => {
+        loading.querySelector('.mind-animation').textContent = 'ALMOST THERE .....';
+      }, 8500);
+      setTimeout(() => {
+        loading.style.display = 'none';
+        // Confetti blast
+        confettiBlast();
+        // Big reveal
+        result.innerHTML = `<div class="big-reveal">${userNumber}</div><div style="font-size:20px; color:#fff; margin-bottom:18px;">That was the number you were thinking! 🎉</div><button onclick="location.reload()" style="margin-top:18px;">Try Again</button>`;
+        result.style.display = 'block';
+      }, 10000);
+    });
+  </script>
+</body>
+</html> 
